@@ -1,15 +1,21 @@
 <div class="container mt-5">
-  <h1>My task list</h1>
+  <h1>My tasks</h1>
 
   <ul id="tasks">
     <% @tasks.each do |task| %>
       <li>
-        <%= check_box_tag "task_#{task.id}", 1, task.completed?, class: 'task-checkbox' %>
+        <%= check_box_tag "task_ids[]", task.id, task.completed?, class: "task-checkbox" %>
         <%= link_to task.title, task_path(task.id) %>
-        <%= link_to task_path(task.id), data: {turbo_method: :delete, turbo_confirm: "Delete #{task.title}?"} do %>
-          <i class="fa-regular fa-trash-can"></i>
+        <%= button_to task_path(task.id), method: :delete, data: { confirm: "Are you sure you want to delete #{task.title}?" }, class: "btn btn-danger btn-sm", title: "Delete Task" do %>
+          <i class="fa-regular fa-trash-can"></i> Delete
         <% end %>
       </li>
     <% end %>
   </ul>
+
+  <hr>
+
+  <%= link_to new_task_path do %>
+    <i class="fa-solid fa-plus"></i> Add a new task
+  <% end %>
 </div>
